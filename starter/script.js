@@ -61,11 +61,31 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
+/**
+ * Bankist project
+ */
+const displayMovements = function(movements) {
+  containerMovements.innerHTML = '';
+
+  movements.forEach(function(mov, i) {
+    const type = mov > 0 ? 'deposit' : 'withdrawal'
+    const html = `
+      <div class="movements__row">
+        <div class="movements__type movements__type--${type}">${i + 1} ${type}</div>
+        <div class="movements__value">${mov}€</div>
+      </div>
+    `;
+
+    containerMovements.insertAdjacentHTML('afterbegin', html)
+  }) 
+}
+displayMovements(account1.movements);
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
 
-
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 
 /////////////////////////////////////////////////
@@ -111,8 +131,6 @@ console.log(letters.join("-"));
 /**
  * 142. Looping Arrays: forEach 
  */
-
-// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 // for (const [i, movement] of movements.entries()) {
 //   if (movement > 0) {
@@ -187,6 +205,10 @@ console.log(letters.join("-"));
 // console.log(solution(-5000));
 // console.log(solution(-9595000));
 
+
+/**
+ * 143.
+ */
 const currencies = new Map([
   ['USD', 'United States dollar'],
   ['EUR', 'Euro'],
@@ -203,3 +225,18 @@ console.log(currenciesUnique);
 currenciesUnique.forEach(function(value, _, set) {
   console.log(`${value}: ${value}`);
 })
+
+
+/**
+ * 148.
+ */
+const eurToUsd = 1.1;
+const movementsUSD = movements.map(mov => mov * eurToUsd)
+console.log(movements);
+console.log(movementsUSD);
+
+const movementsDescription = movements.map((mov, i) => 
+  `Movement ${i+1}: You ${mov > 0 ? 'deposited' : 'withdrew'} ${Math.abs(mov)}`
+  );
+
+console.log(movementsDescription);
