@@ -176,6 +176,48 @@ btnTransfer.addEventListener('click', function (e) {
   }
 });
 
+/**
+ * 161. some and every
+ */
+
+btnLoan.addEventListener('click', function(e) {
+  e.preventDefault();
+
+  const amount = Number(inputLoanAmount.value);
+
+  if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
+    console.log('loan money');
+    //Add movement
+    currentAccount.movements.push(amount);
+
+    //Update UI
+    updateUI(currentAccount);
+  }
+
+  inputLoanAmount.value = '';
+})
+
+
+/**
+ * 160. The findIndex Method
+ */
+btnClose.addEventListener('click', function(e) {
+  e.preventDefault();
+    
+  if (inputCloseUsername.value === currentAccount.username && Number(inputClosePin.value) === currentAccount.pin) {
+    const index = accounts.findIndex(acc => acc.username === currentAccount.username);
+    
+    //Delete account
+    accounts.splice(index, 1);
+
+    //Hide UI
+    containerApp.style.opacity = 0;
+  }
+
+  inputCloseUsername.value = inputClosePin.value = '';
+  inputClosePin.blur();
+})
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -383,3 +425,11 @@ console.log(letters.join("-"));
 //   }
 // }
 // console.log(account);
+
+
+/**
+ * 161. flat and flatMap
+ */
+const arr = [[1, 2, 3], [4, 5, 6], 7, 8];
+console.log(arr.flat());
+
