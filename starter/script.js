@@ -428,8 +428,33 @@ console.log(letters.join("-"));
 
 
 /**
- * 161. flat and flatMap
+ * 162. flat and flatMap
  */
 const arr = [[1, 2, 3], [4, 5, 6], 7, 8];
 console.log(arr.flat());
+const arrDeep = [[[1, 2], 3], [4, [5, 6]], 7, 8];
+console.log(arrDeep.flat(2));
 
+//flat function
+const overalBalance = accounts.map(acc => acc.movements)
+                              .flat()
+                              .reduce((acc, mov) => acc + mov)
+console.log(overalBalance);
+
+//flatMap function
+const overalBalance2 = accounts.flatMap(acc => acc.movements)
+                              .reduce((acc, mov) => acc + mov)
+console.log(overalBalance2);
+
+
+/**
+ * 163. Sorting Arrays
+ */
+//Strings
+const owners = ['Jonas', 'Zach', 'Adam', 'Martha'];
+console.log(owners.sort());
+console.log(owners);
+
+//Numbers
+console.log(movements);
+movements.sort((a, b) => a - b)
