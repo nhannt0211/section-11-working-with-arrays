@@ -64,10 +64,12 @@ const inputClosePin = document.querySelector('.form__input--pin');
 /**
  * Bankist project
  */
-const displayMovements = function (movements) {
+const displayMovements = function (movements, sort = false) {
   containerMovements.innerHTML = '';
 
-  movements.forEach(function (mov, i) {
+  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
+
+  movs.forEach(function (mov, i) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
     const html = `
       <div class="movements__row">
@@ -175,6 +177,55 @@ btnTransfer.addEventListener('click', function (e) {
     updateUI(currentAccount);
   }
 });
+
+/**
+ * 161. some and every
+ */
+
+btnLoan.addEventListener('click', function(e) {
+  e.preventDefault();
+
+  const amount = Number(inputLoanAmount.value);
+
+  if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
+    console.log('loan money');
+    //Add movement
+    currentAccount.movements.push(amount);
+
+    //Update UI
+    updateUI(currentAccount);
+  }
+
+  inputLoanAmount.value = '';
+})
+
+
+/**
+ * 160. The findIndex Method
+ */
+btnClose.addEventListener('click', function(e) {
+  e.preventDefault();
+    
+  if (inputCloseUsername.value === currentAccount.username && Number(inputClosePin.value) === currentAccount.pin) {
+    const index = accounts.findIndex(acc => acc.username === currentAccount.username);
+    
+    //Delete account
+    accounts.splice(index, 1);
+
+    //Hide UI
+    containerApp.style.opacity = 0;
+  }
+
+  inputCloseUsername.value = inputClosePin.value = '';
+  inputClosePin.blur();
+})
+
+let sortState = false;
+btnSort.addEventListener('click', function(e) {
+  e.preventDefault();
+  displayMovements(currentAccount.movements, !sortState);
+  sortState = !sortState;
+})
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -383,3 +434,43 @@ console.log(letters.join("-"));
 //   }
 // }
 // console.log(account);
+
+
+/**
+ * 162. flat and flatMap
+ */
+const arr = [[1, 2, 3], [4, 5, 6], 7, 8];
+console.log(arr.flat());
+const arrDeep = [[[1, 2], 3], [4, [5, 6]], 7, 8];
+console.log(arrDeep.flat(2));
+
+//flat function
+const overalBalance = accounts.map(acc => acc.movements)
+                              .flat()
+                              .reduce((acc, mov) => acc + mov)
+console.log(overalBalance);
+
+//flatMap function
+const overalBalance2 = accounts.flatMap(acc => acc.movements)
+                              .reduce((acc, mov) => acc + mov)
+console.log(overalBalance2);
+
+
+/**
+ * 163. Sorting Arrays
+ */
+//Strings
+const owners = ['Jonas', 'Zach', 'Adam', 'Martha'];
+console.log(owners.sort());
+console.log(owners);
+
+//Numbers
+console.log(movements);
+
+// Ascending
+movements.sort((a, b) => a - b)
+console.log(movements);
+
+// Descending
+movements.sort((a, b) => b - a)
+console.log(movements);
